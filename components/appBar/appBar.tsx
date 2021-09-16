@@ -179,7 +179,7 @@ export default function PrimarySearchAppBar() {
       <AppBar position="static" className={classes.appBarRoor}>
         <Toolbar>
           <Typography className={classes.title} variant="inherit" noWrap>
-            Long VPV Material-UI Application
+            Material-UI Application
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

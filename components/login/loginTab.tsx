@@ -1,34 +1,18 @@
-import { TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import { withStyles } from "@material-ui/core/styles";
 import { useFormik } from "formik";
 import Link from "next/link";
 import React from "react";
-import { useDispatch } from "react-redux";
 import * as Yup from "yup";
+import InputTextField from "../Input/inputTextField";
+import SelectTextField from "../Input/selectTextField";
 // import { login } from "../../redux/login/actions";
-
-const CssTextField = withStyles({
-  root: {
-    "& label.Mui-focused": {
-      color: "grey",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "grey",
-    },
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: "grey",
-      },
-    },
-  },
-})(TextField);
 
 function LoginTab() {
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
+      loginType: undefined,
       isPersistent: true,
     },
     validationSchema: Yup.object({
@@ -43,15 +27,9 @@ function LoginTab() {
     <div className="pt-5 w-50">
       <form
         onSubmit={formik.handleSubmit}
-        className="d-flex flex-column justify-content-center align-items-center w-100"
+        // className="d-flex flex-column justify-content-center align-items-center w-100"
       >
-        <CssTextField
-          className="mb-5 w-100"
-          type="text"
-          name="email"
-          label="Account"
-          size="small"
-          variant="outlined"
+        <InputTextField
           helperText={
             formik.touched.email && formik.errors.email
               ? formik.errors.email
@@ -59,21 +37,35 @@ function LoginTab() {
           }
           onChange={formik.handleChange}
           value={formik.values.email}
+          name="email"
+          label="Account"
         />
-        <CssTextField
-          className="mb-5 w-100"
+        <InputTextField
           type="password"
           name="password"
           label="Password"
-          size="small"
           helperText={
             formik.touched.password && formik.errors.password
               ? formik.errors.password
               : null
           }
-          variant="outlined"
           onChange={formik.handleChange}
           value={formik.values.password}
+        />
+        <SelectTextField
+          name="loginType"
+          label="Login Type"
+          helperText={
+            formik.touched.loginType && formik.errors.loginType
+              ? formik.errors.loginType
+              : null
+          }
+          onChange={formik.handleChange}
+          value={formik.values.loginType}
+          data={[
+            { value: 1, name: "Login with account" },
+            { value: 2, name: "Login as guest" },
+          ]}
         />
         <Button
           type="submit"

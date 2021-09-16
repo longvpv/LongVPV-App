@@ -1,17 +1,20 @@
 import "../public/css/index.css";
-import { createTheme, ThemeProvider } from "@material-ui/core";
+import "../public/css/bootstrap.css";
+
 import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import MainLayout from "../layout/mainLayout";
 import withRedux from "../redux/withRedux";
 import "../libs/extensions";
+import { createTheme, ThemeProvider } from "@material-ui/core";
+import { useEffect } from "react";
+import store from "../redux/store";
 
 function MyApp(props: any) {
-  const { Component, pageProps, store } = props;
+  const { Component, pageProps } = props;
   const AppLayout = Component.Layout || MainLayout;
   // const persistor = persistStore(store);
-
   const theme = createTheme({
     palette: {
       primary: {
@@ -22,22 +25,21 @@ function MyApp(props: any) {
       },
     },
   });
+
   return (
     <>
-      {/* <Provider store={store}> */}
-      {/* <PersistGate
+      <Provider store={store}>
+        {/* <PersistGate
            loading={<Component {...pageProps} />}
            persistor={persistor}
          > */}
-
-      <AppLayout {...pageProps}>
         <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
+          <AppLayout {...pageProps}>
+            <Component {...pageProps} />
+          </AppLayout>
         </ThemeProvider>
-      </AppLayout>
-
-      {/* </PersistGate> */}
-      {/* </Provider> */}
+        {/* </PersistGate> */}
+      </Provider>
     </>
   );
 }

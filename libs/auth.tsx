@@ -9,7 +9,9 @@ function getAuthorizeRoutes() {
 
   let authorizeRoutes = [];
   for (const routeField in appRoutes) {
-    const route = appRoutes[routeField];
+    const _getKeyValue_ = (key: string) => (obj: Record<string, any>) =>
+      obj[key];
+    const route = _getKeyValue_(routeField)(appRoutes);
     if (!excepts.includes(route.path)) authorizeRoutes.push(route.path);
   }
   return authorizeRoutes;
